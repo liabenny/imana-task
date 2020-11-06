@@ -1,0 +1,106 @@
+package edu.rpi.imanatask.controller;
+
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.IanaLinkRelations;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import edu.rpi.imanatask.model.TaskModelAssembler;
+import edu.rpi.imanatask.repository.TaskRepository;
+import edu.rpi.imanatask.entity.Task;
+import edu.rpi.imanatask.exception.TaskNotFoundException;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+@RestController
+public class TaskController {
+    
+    private final TaskRepository taskRepository;
+
+    private final TaskModelAssembler taskModelAssembler;
+
+    TaskController(TaskRepository taskRepository, TaskModelAssembler taskModelAssembler) {
+        this.taskModelAssembler = taskModelAssembler;
+        this.taskRepository = taskRepository;
+    }
+
+    @GetMapping("/tasks/{id}")
+    public EntityModel<Task> getOneTask(@PathVariable String id) {
+        Task task = taskRepository.findById(id)
+            .orElseThrow(() -> new TaskNotFoundException(id));
+        
+        return taskModelAssembler.toModel(task);
+    }
+
+    @GetMapping("/tasks")
+    public CollectionModel<EntityModel<Task>> getManyTasks() {
+        Iterable<Task> iterable = taskRepository.findAll();
+        List<EntityModel<Task>> tasks = StreamSupport.stream(iterable.spliterator(), false)
+            .map(taskModelAssembler::toModel)
+            .collect(Collectors.toList());
+
+        return CollectionModel.of(tasks,
+            linkTo(methodOn(TaskController.class).getManyTasks()).withSelfRel());
+        
+    }
+
+    @PostMapping("/tasks")
+    public ResponseEntity<?> createTask(@RequestBody Task task) {
+        task.setIsComplete(false);
+
+        EntityModel<Task> entityModel = taskModelAssembler.toModel(taskRepository.save(task));
+
+        return ResponseEntity
+            .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
+            .body(entityModel);
+    }
+
+    @DeleteMapping("/tasks/{id}")
+    public ResponseEntity<?> deleteTask(@PathVariable String id) {
+        taskRepository.deleteById(id);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/tasks/{id}")
+    public ResponseEntity<?> updateTask(@RequestBody Task newTask, @PathVariable String id) {
+        Task task = taskRepository.findById(id)
+            .orElseThrow(() -> new TaskNotFoundException(id));
+        
+        task.setName(newTask.getName());
+        task.setDescription(newTask.getName());
+        task.setDeadline(newTask.getDeadline());
+        task.setTaskListId(newTask.getTaskListId());
+        Task updatedTask = taskRepository.save(task);
+        EntityModel<Task> entityModel = taskModelAssembler.toModel(updatedTask);
+
+        return ResponseEntity
+            .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
+            .body(entityModel);
+    }
+
+    @PutMapping("/tasks/{id}/done")
+    public ResponseEntity<?> finishTask(@PathVariable String id) {
+        Task task = taskRepository.findById(id)
+            .orElseThrow(() -> new TaskNotFoundException(id));
+        
+        task.markAsComplete();
+        Task updatedTask = taskRepository.save(task);
+        EntityModel<Task> entityModel = taskModelAssembler.toModel(updatedTask);
+        return ResponseEntity
+            .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
+            .body(entityModel);
+    }
+}
