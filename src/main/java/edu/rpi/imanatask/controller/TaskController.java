@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.rpi.imanatask.model.TaskModelAssembler;
+import edu.rpi.imanatask.repository.TaskListRepository;
 import edu.rpi.imanatask.repository.TaskRepository;
 import edu.rpi.imanatask.entity.Task;
+import edu.rpi.imanatask.exception.TaskListNotFoundException;
 import edu.rpi.imanatask.exception.TaskNotFoundException;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -29,11 +31,16 @@ public class TaskController {
     
     private final TaskRepository taskRepository;
 
+    private final TaskListRepository taskListRepository;
+
     private final TaskModelAssembler taskModelAssembler;
 
-    TaskController(TaskRepository taskRepository, TaskModelAssembler taskModelAssembler) {
+    TaskController(TaskRepository taskRepository,
+                 TaskModelAssembler taskModelAssembler,
+                 TaskListRepository taskListRepository) {
         this.taskModelAssembler = taskModelAssembler;
         this.taskRepository = taskRepository;
+        this.taskListRepository = taskListRepository;
     }
 
     @GetMapping("/tasks/{id}")
@@ -56,9 +63,25 @@ public class TaskController {
         
     }
 
+    @GetMapping("/tasklists/{taskListId}/tasks")
+    public CollectionModel<EntityModel<Task>> getManyTasks(@PathVariable String taskListId) {
+        Iterable<Task> tasks = taskRepository.findByTaskListID(taskListId);
+        List<EntityModel<Task>> entityModels = StreamSupport.stream(tasks.spliterator(), false)
+            .map(taskModelAssembler::toModel)
+            .collect(Collectors.toList());
+
+        return CollectionModel.of(entityModels,
+        linkTo(methodOn(TaskController.class).getManyTasks(taskListId)).withSelfRel(),
+        linkTo(methodOn(TaskListController.class).getOneTaskList(taskListId)).withRel("tasklist"));
+    }
+
     @PostMapping("/tasks")
     public ResponseEntity<?> createTask(@RequestBody Task task) {
         task.setIsComplete(false);
+        if (task.getTaskListId() != null) {
+            taskListRepository.findById(task.getTaskListId())
+                .orElseThrow(() -> new TaskListNotFoundException(task.getTaskListId()));
+        }
 
         EntityModel<Task> entityModel = taskModelAssembler.toModel(taskRepository.save(task));
 
@@ -78,6 +101,11 @@ public class TaskController {
     public ResponseEntity<?> updateTask(@RequestBody Task newTask, @PathVariable String id) {
         Task task = taskRepository.findById(id)
             .orElseThrow(() -> new TaskNotFoundException(id));
+
+        if (newTask.getTaskListId() != null) {
+            taskListRepository.findById(newTask.getTaskListId())
+                .orElseThrow(() -> new TaskListNotFoundException(newTask.getTaskListId()));
+        }
         
         task.setName(newTask.getName());
         task.setDescription(newTask.getName());

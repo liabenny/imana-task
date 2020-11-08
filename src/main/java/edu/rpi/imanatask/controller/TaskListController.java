@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import edu.rpi.imanatask.model.TaskListModelAssembler;
 import edu.rpi.imanatask.repository.TaskListRepository;
-import edu.rpi.imanatask.entity.Task;
+import edu.rpi.imanatask.repository.TaskRepository;
 import edu.rpi.imanatask.entity.TaskList;
 import edu.rpi.imanatask.exception.TaskListNotFoundException;
 
@@ -28,14 +28,19 @@ import java.util.stream.StreamSupport;
 
 @RestController
 public class TaskListController {
+
+    private final TaskRepository taskRepository;
     
     private final TaskListRepository taskListRepository;
 
     private final TaskListModelAssembler taskListModelAssembler;
 
-    TaskListController(TaskListRepository taskListRepository, TaskListModelAssembler taskListModelAssembler) {
-        this.taskListModelAssembler = taskListModelAssembler;
+    TaskListController(TaskRepository taskRepository,
+                    TaskListRepository taskListRepository, 
+                    TaskListModelAssembler taskListModelAssembler) {
+        this.taskRepository = taskRepository;
         this.taskListRepository = taskListRepository;
+        this.taskListModelAssembler = taskListModelAssembler;
     }
 
     @GetMapping("/tasklists/{id}")
@@ -57,12 +62,6 @@ public class TaskListController {
         linkTo(methodOn(TaskListController.class).getManyTaskLists()).withSelfRel());
     }
 
-    @GetMapping("/tasklists/{id}/tasks")
-    public CollectionModel<EntityModel<Task>> getManyTasks(@PathVariable String id) {
-        //TODO implementation
-        return null;
-    }
-
     @PostMapping("/tasklists")
     public ResponseEntity<?> createTaskList(@RequestBody TaskList taskList) {
         TaskList newTaskList = taskListRepository.save(taskList);
@@ -75,7 +74,7 @@ public class TaskListController {
     @DeleteMapping("/tasklists/{id}")
     public ResponseEntity<?> deleteTaskList(@PathVariable String id) {
         taskListRepository.deleteById(id);
-        //TODO delete tasks
+        taskRepository.findByTaskListID(id);
 
         return ResponseEntity.ok().build();
     }

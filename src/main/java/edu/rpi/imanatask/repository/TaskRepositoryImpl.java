@@ -76,5 +76,15 @@ public class TaskRepositoryImpl implements TaskRepository {
         // TODO Auto-generated method stub
 
     }
+
+    @Override
+    public Iterable<Task> findByTaskListID(String taskListId) {
+        return operations.find(Query.query(Criteria.where("taskListId").is(taskListId)), Task.class);    
+    }
+
+    @Override
+    public void findAndRemoveByTaskListID(String taskListId) {
+        operations.findAndRemove(Query.query(Criteria.where("taskListId").is(taskListId)), Task.class);
+    }
     
 }
