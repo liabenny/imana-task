@@ -4,7 +4,6 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.ResponseEntity;
-import org.springframework.lang.Nullable;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -59,7 +58,7 @@ public class TaskController {
     @GetMapping("/tasks")
     public CollectionModel<EntityModel<Task>> getManyTasks(@RequestBody(required = false) Map<String, Object> search) {
         Iterable<Task> iterable = search == null ? 
-            taskRepository.findAll() : taskRepository.findAll(search);
+        taskRepository.findAll() : taskRepository.findAll(search);
         List<EntityModel<Task>> tasks = StreamSupport.stream(iterable.spliterator(), false)
             .map(taskModelAssembler::toModel)
             .collect(Collectors.toList());
