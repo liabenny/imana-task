@@ -4,8 +4,11 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
+import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -22,7 +25,9 @@ import edu.rpi.imanatask.exception.TaskNotFoundException;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -52,14 +57,15 @@ public class TaskController {
     }
 
     @GetMapping("/tasks")
-    public CollectionModel<EntityModel<Task>> getManyTasks() {
-        Iterable<Task> iterable = taskRepository.findAll();
+    public CollectionModel<EntityModel<Task>> getManyTasks(@RequestBody(required = false) Map<String, Object> search) {
+        Iterable<Task> iterable = search == null ? 
+            taskRepository.findAll() : taskRepository.findAll(search);
         List<EntityModel<Task>> tasks = StreamSupport.stream(iterable.spliterator(), false)
             .map(taskModelAssembler::toModel)
             .collect(Collectors.toList());
 
         return CollectionModel.of(tasks,
-            linkTo(methodOn(TaskController.class).getManyTasks()).withSelfRel());
+            linkTo(methodOn(TaskController.class).getManyTasks(search)).withSelfRel());
         
     }
 
@@ -118,6 +124,30 @@ public class TaskController {
             .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
             .body(entityModel);
     }
+
+    @PatchMapping("/tasks/{id}")
+    public ResponseEntity<?> updateTask(@RequestBody Map<String, Object> fields, @PathVariable String id) {
+        Task task = taskRepository.findById(id)
+            .orElseThrow(() -> new TaskNotFoundException(id));
+        
+        fields.forEach((k, v) -> {
+            Field field = ReflectionUtils.findField(Task.class, k);
+            field.setAccessible(true);
+            ReflectionUtils.setField(field, task, v);
+        });
+
+        if (fields.containsKey("taskListId")) {
+            taskListRepository.findById((String) fields.get("taskListId"))
+                .orElseThrow(() -> new TaskListNotFoundException((String) fields.get("taskListId")));
+        }
+
+        Task updatedTask = taskRepository.save(task);
+        EntityModel<Task> entityModel = taskModelAssembler.toModel(updatedTask);
+
+        return ResponseEntity
+            .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
+            .body(entityModel);
+    } 
 
     @PutMapping("/tasks/{id}/done")
     public ResponseEntity<?> finishTask(@PathVariable String id) {

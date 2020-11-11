@@ -10,6 +10,8 @@ import edu.rpi.imanatask.entity.Task;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+import java.util.HashMap;
+
 @Component
 public class TaskModelAssembler implements RepresentationModelAssembler<Task, EntityModel<Task>>{
 
@@ -17,7 +19,7 @@ public class TaskModelAssembler implements RepresentationModelAssembler<Task, En
     public EntityModel<Task> toModel(Task task) {
         EntityModel<Task> taskModel = EntityModel.of(task,
             linkTo(methodOn(TaskController.class).getOneTask(task.getId())).withSelfRel(),
-            linkTo(methodOn(TaskController.class).getManyTasks()).withRel("tasks"));
+            linkTo(methodOn(TaskController.class).getManyTasks(new HashMap<>())).withRel("tasks"));
         
         if (!task.getIsComplete()) {
             taskModel.add(linkTo(methodOn(TaskController.class).finishTask(task.getId())).withRel("finish"));
