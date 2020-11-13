@@ -98,12 +98,12 @@ public class TaskRepositoryImpl implements TaskRepository {
             criterias.add(Criteria.where("isComplete").is(search.get("isComplete")));
         }
         if (search.containsKey("startDate")) {
-            Assert.state(search.get("startDate") instanceof Number, "Invalid Request: startDate should be a Number.");
+            Assert.state(search.get("startDate") instanceof Number, "(startDate) should be a Number.");
             long startTime = ((Number) search.get("startDate")).longValue();
             criterias.add(Criteria.where("deadline").gte(startTime));
         }
         if (search.containsKey("endDate")) {
-            Assert.state(search.get("endDate") instanceof Number, "Invalid Request: endDate should be a Number.");
+            Assert.state(search.get("endDate") instanceof Number, "(endDate) should be a Number.");
             long endTime = ((Number) search.get("endDate")).longValue();
             criterias.add(Criteria.where("deadline").lte(endTime));
         }
