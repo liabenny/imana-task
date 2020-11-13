@@ -1,10 +1,6 @@
 package edu.rpi.imanatask.repository;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -13,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.util.Assert;
 
 import edu.rpi.imanatask.entity.Task;
 
@@ -101,23 +98,16 @@ public class TaskRepositoryImpl implements TaskRepository {
             criterias.add(Criteria.where("isComplete").is(search.get("isComplete")));
         }
         if (search.containsKey("startDate")) {
-            try {
-                DateFormat df = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
-                Date startDate = df.parse((String) search.get("startDate"));
-                criterias.add(Criteria.where("deadline").gte(startDate));
-            } catch (ParseException e) {
-                return new ArrayList<>();
-            }
+            Assert.state(search.get("startDate") instanceof Number, "Invalid Request: startDate should be a Number.");
+            long startTime = ((Number) search.get("startDate")).longValue();
+            criterias.add(Criteria.where("deadline").gte(startTime));
         }
         if (search.containsKey("endDate")) {
-            try {
-                DateFormat df = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
-                Date endDate = df.parse((String) search.get("endDate"));
-                criterias.add(Criteria.where("deadline").lte(endDate));
-            } catch (ParseException e) {
-                return new ArrayList<>();
-            }
+            Assert.state(search.get("endDate") instanceof Number, "Invalid Request: endDate should be a Number.");
+            long endTime = ((Number) search.get("endDate")).longValue();
+            criterias.add(Criteria.where("deadline").lte(endTime));
         }
+
         Criteria criteria = new Criteria();
         if (!criterias.isEmpty()) {
             criteria.andOperator(criterias.toArray(new Criteria[0]));

@@ -65,7 +65,6 @@ public class TaskController {
 
         return CollectionModel.of(tasks,
             linkTo(methodOn(TaskController.class).getManyTasks(search)).withSelfRel());
-        
     }
 
     @GetMapping("/tasklists/{taskListId}/tasks")

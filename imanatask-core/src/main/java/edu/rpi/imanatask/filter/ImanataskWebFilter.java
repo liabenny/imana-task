@@ -21,7 +21,7 @@ public class ImanataskWebFilter implements Filter {
             throws IOException, ServletException {
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         httpServletResponse.addHeader("Access-Control-Allow-Origin", "*");
-        httpServletResponse.addHeader("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, OPTIONS");
+        httpServletResponse.addHeader("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, PATCH, OPTIONS");
         httpServletResponse.addHeader("Access-Control-Allow-Headers", "DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Range,Range");
         chain.doFilter(request, response);
     }

@@ -1,7 +1,5 @@
 package edu.rpi.imanatask.entity;
 
-import java.util.Date;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -19,7 +17,7 @@ public class Task {
     private String description;
 
     @Field("Deadline")
-    private Date deadline;
+    private Long deadline;
 
     @Field("IsComplete")
     private Boolean isComplete;
@@ -35,7 +33,7 @@ public class Task {
         return name;
     }
 
-    public Date getDeadline() {
+    public Long getDeadline() {
         return deadline;
     }
 
@@ -59,7 +57,7 @@ public class Task {
         this.description = description;
     }
 
-    public void setDeadline(Date deadline) {
+    public void setDeadline(Long deadline) {
         this.deadline = deadline;
     }
 
