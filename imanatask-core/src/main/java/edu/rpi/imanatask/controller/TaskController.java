@@ -112,7 +112,7 @@ public class TaskController {
         }
         
         task.setName(newTask.getName());
-        task.setDescription(newTask.getName());
+        task.setDescription(newTask.getDescription());
         task.setDeadline(newTask.getDeadline());
         task.setTaskListId(newTask.getTaskListId());
         Task updatedTask = taskRepository.save(task);
