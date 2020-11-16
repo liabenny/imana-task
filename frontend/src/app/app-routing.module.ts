@@ -6,6 +6,7 @@ import { NewTaskComponent } from './pages/new-task/new-task.component';
 import { TaskService } from './task.service';
 import { EditListComponent } from './pages/edit-list/edit-list.component';
 import { EditTaskComponent } from './pages/edit-task/edit-task.component';
+import { AllTaskViewComponent } from './pages/all-task-view/all-task-view.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'lists', pathMatch: 'full' },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'lists/:listid', component: TaskViewComponent },
   { path: 'lists/:listId/new-task', component: NewTaskComponent },
   { path: 'lists/:listId/edit-task/:taskId', component: EditTaskComponent },
+  { path: 'all-task-view', component: AllTaskViewComponent },
 ];
 
 @NgModule({

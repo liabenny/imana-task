@@ -1,0 +1,31 @@
+<div class="centered-content">
+    <div class="task-manager-container">
+
+        <div class="task-list-container has-background-light">
+            <h1 class="title has-text-primary">
+                Incompleted Tasks
+            </h1>
+
+            <div class="list-menu">
+                <a class="list-menu-item" *ngFor="let list1 of incompledtedTasks">
+                    <p>{{ list1.name }}</p>
+                </a>
+
+            </div>
+        </div>
+        <div class="task-list-padding"></div>
+        <div class="task-list-container has-background-light">
+            <h1 class="title has-text-primary">
+                Completed Tasks
+            </h1>
+
+            <div class="list-menu">
+                <a class="list-menu-item" *ngFor="let list2 of completedTasks">
+                    <p>{{ list2.name }}</p>
+                </a>
+
+            </div>
+        </div>
+
+    </div>
+</div>

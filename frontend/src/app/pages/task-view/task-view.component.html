@@ -44,10 +44,9 @@
                 </div>
 
                 <!-- Task Elements -->
-                <div class="task" *ngFor="let task of checkTask(tasks)" (click)="onTaskClick(task)"
-                    [ngClass]="{ 'completed': task.isComplete}">
+                <div class="task" *ngFor="let task of checkTask(tasks)" [ngClass]="{ 'completed': task.isComplete}">
 
-                    <div class="task-text">
+                    <div class="task-text" (click)="onTaskClick(task)">
                         <p>{{ task.name}}</p>
                     </div>
 
@@ -55,8 +54,7 @@
                         <button class="button" [routerLink]="['/lists', selectedListId, 'edit-task', task.id]">
                             <fa-icon [icon]="faEdit"></fa-icon>
                         </button>
-                        <button class="button is-danger" style="margin-left: 10px;"
-                            (click)="onDeleteTaskClick(task.id)">
+                        <button class="button is-danger" (click)="onDeleteTaskClick(task.id)">
                             <fa-icon [icon]="faTrash"></fa-icon>
                         </button>
                     </div>

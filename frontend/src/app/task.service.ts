@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { WebRequestService } from './web-request.service';
+import { HttpParams } from '@angular/common/http'
 
 @Injectable({
   providedIn: 'root'
@@ -9,15 +10,33 @@ export class TaskService {
   constructor(private webReqService: WebRequestService) { }
 
   getLists() {
-    return this.webReqService.get('tasklists');
+    return this.webReqService.get('tasklists', {});
   }
 
   getTasks(tasklistId: string) {
-    return this.webReqService.get(`tasklists/${tasklistId}/tasks`);
+    return this.webReqService.get(`tasklists/${tasklistId}/tasks`, {});
+  }
+
+  getCompleteTasks() {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    let params = new HttpParams().set("isComplete", "true");
+
+    const data = { headers: headers, params: params };
+    return this.webReqService.get('tasks', data);
+  }
+
+  getInCompleteTasks() {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    let params = new HttpParams().set("isComplete", "false");
+
+    const data = { headers: headers, params: params };
+    return this.webReqService.get('tasks', data);
   }
 
   getCertainTask(taskId: string) {
-    return this.webReqService.get(`tasks/${taskId}`);
+    return this.webReqService.get(`tasks/${taskId}`, {});
   }
 
   createList(title: string) {
@@ -45,10 +64,6 @@ export class TaskService {
     }
     return this.webReqService.post('tasks', data);
   }
-
-  // updateList(id: string) {
-  //   return this.webReqService.patch('')
-  // }
 
   deleteList(taskListId: string) {
     return this.webReqService.delete(`tasklists/${taskListId}`);

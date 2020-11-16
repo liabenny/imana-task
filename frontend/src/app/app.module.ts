@@ -13,6 +13,8 @@ import { EditListComponent } from './pages/edit-list/edit-list.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EditTaskComponent } from './pages/edit-task/edit-task.component';
 import { DlDateTimeDateModule, DlDateTimePickerModule } from 'angular-bootstrap-datetimepicker';
+import { AllTaskViewComponent } from './pages/all-task-view/all-task-view.component';
+import { TimeBasedTaskViewsComponent } from './pages/time-based-task-views/time-based-task-views.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { DlDateTimeDateModule, DlDateTimePickerModule } from 'angular-bootstrap-
     NewListComponent,
     NewTaskComponent,
     EditListComponent,
-    EditTaskComponent
+    EditTaskComponent,
+    AllTaskViewComponent,
+    TimeBasedTaskViewsComponent
   ],
   imports: [
     BrowserModule,

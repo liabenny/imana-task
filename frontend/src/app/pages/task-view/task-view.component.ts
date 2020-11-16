@@ -12,7 +12,7 @@ import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 export class TaskViewComponent implements OnInit {
 
   lists: any[];
-  tasks: any[];
+  tasks: any;
   selectedListId: string;
   faTrash = faTrash;
   faEdit = faEdit;
@@ -79,7 +79,17 @@ export class TaskViewComponent implements OnInit {
 
   onDeleteTaskClick(taskid: string) {
     this.taskService.deleteTask(taskid).subscribe((res: any[]) => {
-      location.reload();
+      var taskList = this.tasks._embedded.taskList;
+      for (var i = 0; i < taskList.length; i++) {
+        console.log(taskList[i].id);
+        console.log(taskid);
+        if (taskList[i].id === taskid) {
+          console.log(taskList[i]);
+          this.tasks._embedded.taskList.splice(i, 1);
+          break;
+        }
+      }
+      // location.reload();
     })
   }
 
