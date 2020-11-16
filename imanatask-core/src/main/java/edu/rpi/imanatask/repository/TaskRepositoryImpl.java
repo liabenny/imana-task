@@ -99,10 +99,12 @@ public class TaskRepositoryImpl implements TaskRepository {
         }
         if (search.containsKey("startDate")) {
             long startTime = Long.parseLong(search.get("startDate"));
+            System.out.println("start: " + startTime);
             criterias.add(Criteria.where("deadline").gte(startTime));
         }
         if (search.containsKey("endDate")) {
             long endTime = Long.parseLong(search.get("endDate"));
+            System.out.println("end: " + endTime);
             criterias.add(Criteria.where("deadline").lte(endTime));
         }
 

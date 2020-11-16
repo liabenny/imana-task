@@ -74,7 +74,7 @@ public class TaskListController {
     @DeleteMapping("/tasklists/{id}")
     public ResponseEntity<?> deleteTaskList(@PathVariable String id) {
         taskListRepository.deleteById(id);
-        taskRepository.findByTaskListID(id);
+        taskRepository.findAndRemoveByTaskListID(id);
 
         return ResponseEntity.ok().build();
     }
