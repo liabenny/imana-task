@@ -12,6 +12,6 @@ public interface TaskRepository extends CrudRepository<Task, String> {
 
     void findAndRemoveByTaskListID(String taskListId);
 
-    Iterable<Task> findAll(Map<String, Object> search);
+    Iterable<Task> findAll(Map<String, String> search);
 
 }

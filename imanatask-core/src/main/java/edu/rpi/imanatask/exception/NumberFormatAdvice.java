@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import edu.rpi.imanatask.message.ErrorData;
 
 @ControllerAdvice
-public class IllegalStateAdvice {
+public class NumberFormatAdvice {
 
     @ResponseBody
-    @ExceptionHandler(IllegalStateException.class)
-    ResponseEntity<ErrorData> illegalStateHandler(IllegalStateException ex) {
+    @ExceptionHandler(NumberFormatException.class)
+    ResponseEntity<ErrorData> illegalStateHandler(NumberFormatException ex) {
         ErrorData errorMsg = new ErrorData(ex.getMessage());
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(errorMsg);
     }

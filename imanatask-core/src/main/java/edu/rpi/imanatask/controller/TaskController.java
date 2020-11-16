@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.rpi.imanatask.model.TaskModelAssembler;
@@ -56,7 +57,7 @@ public class TaskController {
     }
 
     @GetMapping("/tasks")
-    public CollectionModel<EntityModel<Task>> getManyTasks(@RequestBody(required = false) Map<String, Object> search) {
+    public CollectionModel<EntityModel<Task>> getManyTasks(@RequestParam(required = false) Map<String, String> search) {
         Iterable<Task> iterable = search == null ? 
         taskRepository.findAll() : taskRepository.findAll(search);
         List<EntityModel<Task>> tasks = StreamSupport.stream(iterable.spliterator(), false)

@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.util.Assert;
 
 import edu.rpi.imanatask.entity.Task;
 
@@ -92,19 +91,18 @@ public class TaskRepositoryImpl implements TaskRepository {
     }
 
     @Override
-    public Iterable<Task> findAll(Map<String, Object> search) {
+    public Iterable<Task> findAll(Map<String, String> search) {
         List<Criteria> criterias = new ArrayList<>();
+
         if (search.containsKey("isComplete")) {
-            criterias.add(Criteria.where("isComplete").is(search.get("isComplete")));
+            criterias.add(Criteria.where("isComplete").is(Boolean.parseBoolean(search.get("isComplete"))));
         }
         if (search.containsKey("startDate")) {
-            Assert.state(search.get("startDate") instanceof Number, "(startDate) should be a Number.");
-            long startTime = ((Number) search.get("startDate")).longValue();
+            long startTime = Long.parseLong(search.get("startDate"));
             criterias.add(Criteria.where("deadline").gte(startTime));
         }
         if (search.containsKey("endDate")) {
-            Assert.state(search.get("endDate") instanceof Number, "(endDate) should be a Number.");
-            long endTime = ((Number) search.get("endDate")).longValue();
+            long endTime = Long.parseLong(search.get("endDate"));
             criterias.add(Criteria.where("deadline").lte(endTime));
         }
 
