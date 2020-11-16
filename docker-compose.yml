@@ -1,5 +1,13 @@
 version: "3.3"
 services:
+        imanatask_web:
+                container_name: imanatask_web
+                build: ./imanatask-web
+                ports:
+                        - "4200:4200"
+                depends_on:
+                        - imanatask_core
+
         imanatask_core:
                 container_name: imanatask_core
                 build: ./imanatask-core
