@@ -87,7 +87,7 @@ public class TaskRepositoryImpl implements TaskRepository {
 
     @Override
     public void findAndRemoveByTaskListID(String taskListId) {
-        operations.findAndRemove(Query.query(Criteria.where("taskListId").is(taskListId)), Task.class);
+        operations.remove(Query.query(Criteria.where("taskListId").is(taskListId)), Task.class);
     }
 
     @Override
