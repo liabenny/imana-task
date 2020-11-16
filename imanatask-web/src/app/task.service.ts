@@ -35,6 +35,15 @@ export class TaskService {
     return this.webReqService.get('tasks', data);
   }
 
+  getTaskWithinRange(startDate: number, endDate: number) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    let params = new HttpParams().set("startDate", startDate.toString()).set("endDate", endDate.toString());
+
+    const data = { headers: headers, params: params };
+    return this.webReqService.get('tasks', data);
+  }
+
   getCertainTask(taskId: string) {
     return this.webReqService.get(`tasks/${taskId}`, {});
   }
