@@ -1,2 +1,2 @@
-# imana-task
+# ImanaTask
 Yet another task management application.
