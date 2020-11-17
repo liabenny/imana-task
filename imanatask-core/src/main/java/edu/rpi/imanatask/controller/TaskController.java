@@ -49,7 +49,7 @@ public class TaskController {
         this.taskListRepository = taskListRepository;
     }
 
-    @GetMapping("/tasks/{id}")
+    @GetMapping("/api/tasks/{id}")
     public EntityModel<Task> getOneTask(@PathVariable String id) {
         Task task = taskRepository.findById(id)
             .orElseThrow(() -> new TaskNotFoundException(id));
@@ -57,7 +57,7 @@ public class TaskController {
         return taskModelAssembler.toModel(task);
     }
 
-    @GetMapping("/tasks")
+    @GetMapping("/api/tasks")
     public CollectionModel<EntityModel<Task>> getManyTasks(@RequestParam(required = false) Map<String, String> search) {
         Iterable<Task> iterable = search == null ? 
         taskRepository.findAll() : taskRepository.findAll(search);
@@ -69,7 +69,7 @@ public class TaskController {
             linkTo(methodOn(TaskController.class).getManyTasks(search)).withSelfRel());
     }
 
-    @GetMapping("/tasklists/{taskListId}/tasks")
+    @GetMapping("/api/tasklists/{taskListId}/tasks")
     public CollectionModel<EntityModel<Task>> getManyTasks(@PathVariable String taskListId) {
         Iterable<Task> tasks = taskRepository.findByTaskListID(taskListId);
         List<EntityModel<Task>> entityModels = StreamSupport.stream(tasks.spliterator(), false)
@@ -81,7 +81,7 @@ public class TaskController {
         linkTo(methodOn(TaskListController.class).getOneTaskList(taskListId)).withRel("tasklist"));
     }
 
-    @PostMapping("/tasks")
+    @PostMapping("/api/tasks")
     public ResponseEntity<?> createTask(@RequestBody Task task) {
         task.setIsComplete(false);
         if (task.getTaskListId() != null) {
@@ -96,14 +96,14 @@ public class TaskController {
             .body(entityModel);
     }
 
-    @DeleteMapping("/tasks/{id}")
+    @DeleteMapping("/api/tasks/{id}")
     public ResponseEntity<?> deleteTask(@PathVariable String id) {
         taskRepository.deleteById(id);
 
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/tasks/{id}")
+    @PutMapping("/api/tasks/{id}")
     public ResponseEntity<?> updateTask(@RequestBody Task newTask, @PathVariable String id) {
         Task task = taskRepository.findById(id)
             .orElseThrow(() -> new TaskNotFoundException(id));
@@ -125,7 +125,7 @@ public class TaskController {
             .body(entityModel);
     }
 
-    @PatchMapping("/tasks/{id}")
+    @PatchMapping("/api/tasks/{id}")
     public ResponseEntity<?> updateTask(@RequestBody Map<String, Object> fields, @PathVariable String id) {
         Task task = taskRepository.findById(id)
             .orElseThrow(() -> new TaskNotFoundException(id));
@@ -149,7 +149,7 @@ public class TaskController {
             .body(entityModel);
     } 
 
-    @PutMapping("/tasks/{id}/done")
+    @PutMapping("/api/tasks/{id}/done")
     public ResponseEntity<?> finishTask(@PathVariable String id) {
         Task task = taskRepository.findById(id)
             .orElseThrow(() -> new TaskNotFoundException(id));

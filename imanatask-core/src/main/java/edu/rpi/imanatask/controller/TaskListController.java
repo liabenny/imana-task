@@ -43,7 +43,7 @@ public class TaskListController {
         this.taskListModelAssembler = taskListModelAssembler;
     }
 
-    @GetMapping("/tasklists/{id}")
+    @GetMapping("/api/tasklists/{id}")
     public EntityModel<TaskList> getOneTaskList(@PathVariable String id) {
         TaskList taskList = taskListRepository.findById(id)
             .orElseThrow(() -> new TaskListNotFoundException(id));
@@ -51,7 +51,7 @@ public class TaskListController {
         return taskListModelAssembler.toModel(taskList);
     }
 
-    @GetMapping("/tasklists")
+    @GetMapping("/api/tasklists")
     public CollectionModel<EntityModel<TaskList>> getManyTaskLists() {
         Iterable<TaskList> iterable = taskListRepository.findAll();
         List<EntityModel<TaskList>> tasklists = StreamSupport.stream(iterable.spliterator(), false)
@@ -62,7 +62,7 @@ public class TaskListController {
         linkTo(methodOn(TaskListController.class).getManyTaskLists()).withSelfRel());
     }
 
-    @PostMapping("/tasklists")
+    @PostMapping("/api/tasklists")
     public ResponseEntity<?> createTaskList(@RequestBody TaskList taskList) {
         TaskList newTaskList = taskListRepository.save(taskList);
 
@@ -71,7 +71,7 @@ public class TaskListController {
         .body(taskListModelAssembler.toModel(newTaskList));
     }
 
-    @DeleteMapping("/tasklists/{id}")
+    @DeleteMapping("/api/tasklists/{id}")
     public ResponseEntity<?> deleteTaskList(@PathVariable String id) {
         taskListRepository.deleteById(id);
         taskRepository.findAndRemoveByTaskListID(id);
@@ -79,7 +79,7 @@ public class TaskListController {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/tasklists/{id}")
+    @PutMapping("/api/tasklists/{id}")
     public ResponseEntity<?> updateTaskList(@RequestBody TaskList newTaskList, @PathVariable String id) {
         TaskList taskList = taskListRepository.findById(id)
             .orElseThrow(() -> new TaskListNotFoundException(id));
