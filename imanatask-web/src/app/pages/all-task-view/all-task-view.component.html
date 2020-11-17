@@ -19,13 +19,15 @@
             </h1>
 
             <div class="list-menu">
-                <a class="list-menu-item" *ngFor="let list1 of incompledtedTasks">
-                    <p>
-                        <fa-icon [icon]="faTasks"></fa-icon> {{ list1.name }} <br>
-                        <fa-icon [icon]="faInfoCircle"></fa-icon> {{ list1.description }} <br>
-                        <fa-icon [icon]="faClock"></fa-icon> {{ transferNumDate(list1.deadline) }}
-                    </p>
-                </a>
+                <cdk-virtual-scroll-viewport style="height: 500px" itemSize="90">
+                    <a class="list-menu-item" *cdkVirtualFor="let list1 of incompledtedTasks">
+                        <p>
+                            <fa-icon [icon]="faTasks"></fa-icon> {{ list1.name }} <br>
+                            <fa-icon [icon]="faInfoCircle"></fa-icon> {{ list1.description }} <br>
+                            <fa-icon [icon]="faClock"></fa-icon> {{ transferNumDate(list1.deadline) }}
+                        </p>
+                    </a>
+                </cdk-virtual-scroll-viewport>
             </div>
         </div>
         <div class="task-list-padding"></div>
@@ -34,13 +36,15 @@
                 Completed Tasks
             </h1>
             <div class="list-menu">
-                <a class="list-menu-item" *ngFor="let list2 of completedTasks">
-                    <p>
-                        <fa-icon [icon]="faTasks"></fa-icon> {{ list2.name }} <br>
-                        <fa-icon [icon]="faInfoCircle"></fa-icon> {{ list2.description }} <br>
-                        <fa-icon [icon]="faClock"></fa-icon> {{ transferNumDate(list2.deadline) }}
-                    </p>
-                </a>
+                <cdk-virtual-scroll-viewport style="height: 500px" itemSize="90">
+                    <a class="list-menu-item" *cdkVirtualFor="let list2 of completedTasks">
+                        <p>
+                            <fa-icon [icon]="faTasks"></fa-icon> {{ list2.name }} <br>
+                            <fa-icon [icon]="faInfoCircle"></fa-icon> {{ list2.description }} <br>
+                            <fa-icon [icon]="faClock"></fa-icon> {{ transferNumDate(list2.deadline) }}
+                        </p>
+                    </a>
+                </cdk-virtual-scroll-viewport>
             </div>
             <div class="button returnButton is-primary has-text-white" routerLink="/lists">
                 Return

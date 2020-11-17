@@ -15,14 +15,15 @@
             </h1>
 
             <div class="list-menu">
-                <a class="list-menu-item" *ngFor="let list1 of pastTasks">
-                    <p>
-                        <fa-icon [icon]="faTasks"></fa-icon> {{ list1.name }} <br>
-                        <fa-icon [icon]="faInfoCircle"></fa-icon> {{ list1.description }} <br>
-                        <fa-icon [icon]="faClock"></fa-icon> {{ transferNumDate(list1.deadline) }}
-                    </p>
-                </a>
-
+                <cdk-virtual-scroll-viewport style="height: 500px" itemSize="90">
+                    <a class="list-menu-item" *cdkVirtualFor="let list1 of pastTasks">
+                        <p>
+                            <fa-icon [icon]="faTasks"></fa-icon> {{ list1.name }} <br>
+                            <fa-icon [icon]="faInfoCircle"></fa-icon> {{ list1.description }} <br>
+                            <fa-icon [icon]="faClock"></fa-icon> {{ transferNumDate(list1.deadline) }}
+                        </p>
+                    </a>
+                </cdk-virtual-scroll-viewport>
             </div>
         </div>
         <div class="task-list-padding"></div>
@@ -32,14 +33,15 @@
             </h1>
 
             <div class="list-menu">
-                <a class="list-menu-item" *ngFor="let list2 of oneDayTasks">
-                    <p>
-                        <fa-icon [icon]="faTasks"></fa-icon> {{ list2.name }} <br>
-                        <fa-icon [icon]="faInfoCircle"></fa-icon> {{ list2.description }} <br>
-                        <fa-icon [icon]="faClock"></fa-icon> {{ transferNumDate(list2.deadline) }}
-                    </p>
-                </a>
-
+                <cdk-virtual-scroll-viewport style="height: 500px" itemSize="90">
+                    <a class="list-menu-item" *cdkVirtualFor="let list2 of oneDayTasks">
+                        <p>
+                            <fa-icon [icon]="faTasks"></fa-icon> {{ list2.name }} <br>
+                            <fa-icon [icon]="faInfoCircle"></fa-icon> {{ list2.description }} <br>
+                            <fa-icon [icon]="faClock"></fa-icon> {{ transferNumDate(list2.deadline) }}
+                        </p>
+                    </a>
+                </cdk-virtual-scroll-viewport>
             </div>
         </div>
         <div class="task-list-padding"></div>
@@ -49,14 +51,15 @@
             </h1>
 
             <div class="list-menu">
-                <a class="list-menu-item" *ngFor="let list3 of oneWeekTasks">
-                    <p>
-                        <fa-icon [icon]="faTasks"></fa-icon> {{ list3.name }} <br>
-                        <fa-icon [icon]="faInfoCircle"></fa-icon> {{ list3.description }} <br>
-                        <fa-icon [icon]="faClock"></fa-icon> {{ transferNumDate(list3.deadline) }}
-                    </p>
-                </a>
-
+                <cdk-virtual-scroll-viewport style="height: 500px" itemSize="90">
+                    <a class="list-menu-item" *cdkVirtualFor="let list3 of oneWeekTasks">
+                        <p>
+                            <fa-icon [icon]="faTasks"></fa-icon> {{ list3.name }} <br>
+                            <fa-icon [icon]="faInfoCircle"></fa-icon> {{ list3.description }} <br>
+                            <fa-icon [icon]="faClock"></fa-icon> {{ transferNumDate(list3.deadline) }}
+                        </p>
+                    </a>
+                </cdk-virtual-scroll-viewport>
             </div>
         </div>
         <div class="task-list-padding"></div>
@@ -66,13 +69,15 @@
             </h1>
 
             <div class="list-menu">
-                <a class="list-menu-item" *ngFor="let list4 of afterOneWeekTasks">
-                    <p>
-                        <fa-icon [icon]="faTasks"></fa-icon> {{ list4.name }} <br>
-                        <fa-icon [icon]="faInfoCircle"></fa-icon> {{ list4.description }} <br>
-                        <fa-icon [icon]="faClock"></fa-icon> {{ transferNumDate(list4.deadline) }}
-                    </p>
-                </a>
+                <cdk-virtual-scroll-viewport style="height: 500px" itemSize="90">
+                    <a class="list-menu-item" *cdkVirtualFor="let list4 of afterOneWeekTasks">
+                        <p>
+                            <fa-icon [icon]="faTasks"></fa-icon> {{ list4.name }} <br>
+                            <fa-icon [icon]="faInfoCircle"></fa-icon> {{ list4.description }} <br>
+                            <fa-icon [icon]="faClock"></fa-icon> {{ transferNumDate(list4.deadline) }}
+                        </p>
+                    </a>
+                </cdk-virtual-scroll-viewport>
             </div>
 
             <div class="button returnButton is-primary has-text-white" routerLink="/lists">

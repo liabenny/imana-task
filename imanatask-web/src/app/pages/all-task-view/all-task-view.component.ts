@@ -20,22 +20,23 @@ export class AllTaskViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.queue([this.getComplete(), this.move(this.completedTasks, this.incompledtedTasks), this.getIncomplete()]);
+    this.getComplete();
   }
 
-  queue(arr) {
-    var sequence = Promise.resolve()
-    arr.forEach(function (item) {
-      sequence = sequence.then(item)
-    })
-    return sequence
-  }
+  // queue(arr) {
+  //   var sequence = Promise.resolve()
+  //   arr.forEach(function (item) {
+  //     sequence = sequence.then(item)
+  //   })
+  //   return sequence
+  // }
 
   getComplete() {
     this.taskService.getCompleteTasks().subscribe((res1: any) => {
       if ("_embedded" in res1) {
         this.completedTasks = res1._embedded.taskList;
         console.log(this.completedTasks);
+        this.getIncomplete();
       }
     })
   }
@@ -45,6 +46,7 @@ export class AllTaskViewComponent implements OnInit {
       if ("_embedded" in res2) {
         this.incompledtedTasks = res2._embedded.taskList;
         console.log(this.incompledtedTasks);
+        this.move(this.completedTasks, this.incompledtedTasks);
       }
     })
   }
