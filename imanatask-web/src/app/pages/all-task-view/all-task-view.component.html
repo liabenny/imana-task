@@ -1,6 +1,18 @@
 <div class="centered-content">
+    <div class="tabbarCollection">
+        <div id="myProgress">
+            <div id="myBar">10%</div>
+        </div>
+    </div>
+    <div>
+        <div class="button is-light has-text-black">
+            All Task Views
+        </div>
+        <div class="button is-primary has-text-white" routerLink="/time-based-task-view">
+            Time-based Task Views
+        </div>
+    </div>
     <div class="task-manager-container">
-
         <div class="task-list-container has-background-light">
             <h1 class="title has-text-primary">
                 Incompleted Tasks
@@ -8,9 +20,12 @@
 
             <div class="list-menu">
                 <a class="list-menu-item" *ngFor="let list1 of incompledtedTasks">
-                    <p>{{ list1.name }}</p>
+                    <p>
+                        <fa-icon [icon]="faTasks"></fa-icon> {{ list1.name }} <br>
+                        <fa-icon [icon]="faInfoCircle"></fa-icon> {{ list1.description }} <br>
+                        <fa-icon [icon]="faClock"></fa-icon> {{ transferNumDate(list1.deadline) }}
+                    </p>
                 </a>
-
             </div>
         </div>
         <div class="task-list-padding"></div>
@@ -18,12 +33,17 @@
             <h1 class="title has-text-primary">
                 Completed Tasks
             </h1>
-
             <div class="list-menu">
                 <a class="list-menu-item" *ngFor="let list2 of completedTasks">
-                    <p>{{ list2.name }}</p>
+                    <p>
+                        <fa-icon [icon]="faTasks"></fa-icon> {{ list2.name }} <br>
+                        <fa-icon [icon]="faInfoCircle"></fa-icon> {{ list2.description }} <br>
+                        <fa-icon [icon]="faClock"></fa-icon> {{ transferNumDate(list2.deadline) }}
+                    </p>
                 </a>
-
+            </div>
+            <div class="button returnButton is-primary has-text-white" routerLink="/lists">
+                Return
             </div>
         </div>
 

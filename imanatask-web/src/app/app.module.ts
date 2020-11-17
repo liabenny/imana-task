@@ -25,7 +25,7 @@ import { TimeBasedTaskViewsComponent } from './pages/time-based-task-views/time-
     EditListComponent,
     EditTaskComponent,
     AllTaskViewComponent,
-    TimeBasedTaskViewsComponent
+    TimeBasedTaskViewsComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,7 +33,7 @@ import { TimeBasedTaskViewsComponent } from './pages/time-based-task-views/time-
     HttpClientModule,
     FontAwesomeModule,
     FormsModule,
-    DlDateTimeDateModule,  // <--- Determines the data type of the model
+    DlDateTimeDateModule,
     DlDateTimePickerModule,
   ],
   providers: [FormsModule],

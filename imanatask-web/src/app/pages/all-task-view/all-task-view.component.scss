@@ -62,11 +62,13 @@
         border-radius: 5px;
 
         width: 100%;
-        color: #5f5f5f;
+        color: white;
         margin-bottom: 5px;
+        background-color: $palegreen;
+        font-weight: 500;
 
         &:hover {
-            background: $light;
+            background: LightSlateGrey;
         }
 
         &.is-active {
@@ -135,5 +137,34 @@
     font-size: 20px;
     color: #777;
     text-align: center;
+}
+
+.returnButton {
+    position: absolute;
+    height: 40px;
+    width: 80px;
+    bottom: 35px;
+    right: 35px;
+}
+
+.tabbarCollection {
+    position: absolute;
+    width: 50%;
+    align-items: center;
+    top: 10%;
+}
+
+#myProgress {
+    width: 100%;
+    background-color: #ddd;
+}
+  
+#myBar {
+    width: 10%;
+    height: 30px;
+    background-color: Orange;
+    text-align: center;
+    line-height: 30px;
+    color: white;
 }
 

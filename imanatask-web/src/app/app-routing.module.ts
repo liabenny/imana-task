@@ -7,6 +7,7 @@ import { TaskService } from './task.service';
 import { EditListComponent } from './pages/edit-list/edit-list.component';
 import { EditTaskComponent } from './pages/edit-task/edit-task.component';
 import { AllTaskViewComponent } from './pages/all-task-view/all-task-view.component';
+import { TimeBasedTaskViewsComponent } from './pages/time-based-task-views/time-based-task-views.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'lists', pathMatch: 'full' },
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'lists/:listId/new-task', component: NewTaskComponent },
   { path: 'lists/:listId/edit-task/:taskId', component: EditTaskComponent },
   { path: 'all-task-view', component: AllTaskViewComponent },
+  { path: 'time-based-task-view', component: TimeBasedTaskViewsComponent },
 ];
 
 @NgModule({

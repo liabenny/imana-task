@@ -7,6 +7,7 @@ $turquoise: #44ddd0;
 $green: #27d7a1;
 $light-green: #45f69e; 
 $dark-green: rgb(0, 100, 80);
+$palegreen: #7cdfc1;
 
 $light: #f8f8f8;
 
@@ -37,6 +38,7 @@ html, body {
 
 .centered-content {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
