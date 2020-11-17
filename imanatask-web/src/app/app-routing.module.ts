@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { NewListComponent } from './pages/new-list/new-list.component';
 import { TaskViewComponent } from './pages/task-view/task-view.component';
 import { NewTaskComponent } from './pages/new-task/new-task.component';
-import { TaskService } from './task.service';
 import { EditListComponent } from './pages/edit-list/edit-list.component';
 import { EditTaskComponent } from './pages/edit-task/edit-task.component';
 import { AllTaskViewComponent } from './pages/all-task-view/all-task-view.component';
