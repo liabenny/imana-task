@@ -47,21 +47,24 @@
                 </div>
 
                 <!-- Task Elements -->
-                <div class="task" *ngFor="let task of checkTask(tasks)" [ngClass]="{ 'completed': task.isComplete}">
+                <cdk-virtual-scroll-viewport style="height: 500px" itemSize="90">
+                    <div class="task" *cdkVirtualFor="let task of checkTask(tasks)"
+                        [ngClass]="{ 'completed': task.isComplete}">
 
-                    <div class="task-text" (click)="onTaskClick(task)">
-                        <p>{{ task.name}}</p>
-                    </div>
+                        <div class="task-text" (click)="onTaskClick(task)">
+                            <p>{{ task.name}}</p>
+                        </div>
 
-                    <div class="task-buttons">
-                        <button class="button" [routerLink]="['/lists', selectedListId, 'edit-task', task.id]">
-                            <fa-icon [icon]="faEdit"></fa-icon>
-                        </button>
-                        <button class="button is-danger" (click)="onDeleteTaskClick(task.id)">
-                            <fa-icon [icon]="faTrash"></fa-icon>
-                        </button>
+                        <div class="task-buttons">
+                            <button class="button" [routerLink]="['/lists', selectedListId, 'edit-task', task.id]">
+                                <fa-icon [icon]="faEdit"></fa-icon>
+                            </button>
+                            <button class="button is-danger" (click)="onDeleteTaskClick(task.id)">
+                                <fa-icon [icon]="faTrash"></fa-icon>
+                            </button>
+                        </div>
                     </div>
-                </div>
+                </cdk-virtual-scroll-viewport>
 
                 <button class="circle-add-button button is-primary"
                     [routerLink]="['/lists', selectedListId, 'new-task']">
