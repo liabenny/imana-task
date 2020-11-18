@@ -36,8 +36,8 @@ export class AllTaskViewComponent implements OnInit {
       if ("_embedded" in res1) {
         this.completedTasks = res1._embedded.taskList;
         console.log(this.completedTasks);
-        this.getIncomplete();
       }
+      this.getIncomplete();
     })
   }
 

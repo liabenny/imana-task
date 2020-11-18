@@ -89,15 +89,23 @@ export class TaskViewComponent implements OnInit {
           break;
         }
       }
-      // location.reload();
+      location.reload();
     })
   }
 
   onTaskClick(task: any) {
-    this.taskService.markCompleted(task).subscribe(() => {
-      console.log("Completed successfully!");
-      // the task has been set to be completed successfully
-      task.isComplete = true;
-    })
+    if (task.isComplete === false) {
+      this.taskService.markCompleted(task).subscribe(() => {
+        // the task has been set to be completed successfully
+        task.isComplete = true;
+      })
+    }
+    else {
+      this.taskService.markIncompleted(task).subscribe(() => {
+        // the task has been set to be incomplete successfully
+        task.isComplete = false;
+      })
+    }
+
   }
 }
