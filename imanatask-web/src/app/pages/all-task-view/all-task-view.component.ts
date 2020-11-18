@@ -44,8 +44,10 @@ export class AllTaskViewComponent implements OnInit {
   move(completedTasks, incompledtedTasks) {
     var completeLen = 0;
     var incompleteLen = 0;
-    if (completedTasks !== undefined && incompledtedTasks !== undefined) {
+    if (completedTasks !== undefined) {
       completeLen = completedTasks.length;
+    }
+    if (incompledtedTasks !== undefined) {
       incompleteLen = incompledtedTasks.length;
     }
     var elem = document.getElementById("myBar");
