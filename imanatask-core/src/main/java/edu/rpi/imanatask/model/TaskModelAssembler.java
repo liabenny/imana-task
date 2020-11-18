@@ -23,6 +23,8 @@ public class TaskModelAssembler implements RepresentationModelAssembler<Task, En
         
         if (!task.getIsComplete()) {
             taskModel.add(linkTo(methodOn(TaskController.class).finishTask(task.getId())).withRel("finish"));
+        } else {
+            taskModel.add(linkTo(methodOn(TaskController.class).undoFinishTask(task.getId())).withRel("undo"));
         }
 
         return taskModel;

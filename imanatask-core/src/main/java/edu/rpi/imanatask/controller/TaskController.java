@@ -154,7 +154,20 @@ public class TaskController {
         Task task = taskRepository.findById(id)
             .orElseThrow(() -> new TaskNotFoundException(id));
         
-        task.markAsComplete();
+        task.setIsComplete(true);
+        Task updatedTask = taskRepository.save(task);
+        EntityModel<Task> entityModel = taskModelAssembler.toModel(updatedTask);
+        return ResponseEntity
+            .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
+            .body(entityModel);
+    }
+
+    @PutMapping("/api/tasks/{id}/undo")
+    public ResponseEntity<?> undoFinishTask(@PathVariable String id) {
+        Task task = taskRepository.findById(id)
+            .orElseThrow(() -> new TaskNotFoundException(id));
+        
+        task.setIsComplete(false);
         Task updatedTask = taskRepository.save(task);
         EntityModel<Task> entityModel = taskModelAssembler.toModel(updatedTask);
         return ResponseEntity
