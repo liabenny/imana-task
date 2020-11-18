@@ -89,7 +89,7 @@ export class TaskViewComponent implements OnInit {
           break;
         }
       }
-      // location.reload();
+      location.reload();
     })
   }
 
