@@ -6,6 +6,17 @@
     height: 100%;
     max-width: 1000px;
     max-height: 680px;
+    box-shadow:  1em 1em 1em rgba(10, 10, 10, 0.1), 0 0px 0 1px rgba(10, 10, 10, 0.02);
+}
+
+.task-list-font-color {
+    color : #ffffff
+}
+
+.custom-buttom-style {
+    background-color: #ffffff;
+    border-color: transparent;
+    color: #363e48;
 }
 
 .sidebar {
@@ -13,7 +24,7 @@
     flex-direction: column;
 
     width: 250px;
-    background: white;
+    background: #363e48;
 
     padding: 42px;
 
@@ -57,16 +68,20 @@
         border-radius: 5px;
 
         width: 100%;
-        color: #5f5f5f;
-        margin-bottom: 5px;
+        color: #ffffff;
+        margin-bottom: 10px;
+        box-shadow: 1.2px 1.2px 1.2px 1.2px rgba($color: #1c2025, $alpha: 0.8), 0 0 0 1px rgba($color: #1c2025, $alpha: 0.2);
 
         &:hover {
+            box-shadow: 1.2px 1.2px 1.2px 1.2px rgba($color: #979797, $alpha: 0.8) inset;
+            color: #363e48;
             background: $light;
         }
 
         &.is-active {
-            background-color: #cff8ef;
-            color: $dark-green;
+            box-shadow: 1.2px 1.2px 1.2px 1.2px rgba($color: #979797, $alpha: 0.8) inset;
+            background-color: #ffffff;
+            color: #363e48;
         }
     }
 }
@@ -89,8 +104,8 @@
         }
         
         &:hover {
-            box-shadow: 0 0 0 5px #eeeeee;
-
+            // box-shadow: 0 0 0 5px #eeeeee;
+            box-shadow: 1.2px 1.2px 1.2px 1.2px rgba($color: #979797, $alpha: 0.5) inset;
             .task-buttons {
                 opacity: 1;
                 transform: scale(1);
@@ -98,9 +113,14 @@
         }
     }
 
-    &.completed .task-text {
-        text-decoration: line-through;
-        opacity: 0.8;
+    &.completed {
+        background-color: rgb(233, 233, 233);
+        box-shadow: 1.2px 1.2px 1.2px 1.2px rgba($color: #b1b1b1, $alpha: 0.4) inset;
+        opacity: 0.4;
+
+        .task-text {
+            text-decoration: line-through;
+        }
     }
 
 
@@ -113,6 +133,10 @@
         transition: opacity 0.2s, transform 0.2s;
         opacity: 0;
         transform: scale(0.85);
+    }
+
+    .task-button-style {
+        margin-left: 2%;
     }
 }
 
@@ -131,4 +155,3 @@
     color: #777;
     text-align: center;
 }
-
