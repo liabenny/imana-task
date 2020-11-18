@@ -4,19 +4,19 @@
             Edit task
         </h1>
 
-        <h1 class="head">
+        <h1 class="head is-title">
             Task Name
         </h1>
-        <input #taskTitleInput class="input has-background-light is-small" id="title" type="text">
+        <input #taskTitleInput class="input has-background-white is-small" id="title" type="text">
         <br><br>
 
-        <h1 class="head">
+        <h1 class="head is-title">
             Task Descrpition
         </h1>
-        <textarea #taskDescription class="textarea has-background-light is-small" id="des">{{des}}</textarea>
+        <textarea #taskDescription class="textarea has-background-white is-small" id="des">{{des}}</textarea>
         <br><br>
 
-        <h1 class="head">
+        <h1 class="head is-title">
             Task Time
         </h1>
         <dl-date-time-picker startView="day" maxView="year" minView="day" [(ngModel)]="selectedDate">
@@ -29,7 +29,7 @@
 
         <div class="buttons is-right">
             <button class="button is-medium" [routerLink]="['/lists', listId]">Cancel</button>
-            <button class="button is-primary has-text-white is-medium"
+            <button class="button has-text-white is-medium custom-buttom-style"
                 (click)="updateTask(taskTitleInput.value, taskDescription.value, selectedDate)">Create</button>
         </div>
 

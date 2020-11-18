@@ -1,8 +1,8 @@
 <div class="centered-content">
     <div class="task-manager-container">
 
-        <div class="sidebar has-background-white">
-            <h1 class="title has-text-primary">
+        <div class="sidebar">
+            <h1 class="title task-list-font-color">
                 Lists
             </h1>
 
@@ -14,14 +14,14 @@
 
             </div>
 
-            <button class="button is-primary has-text-white" routerLink="/new-list">+ New List</button>
+            <button class="button custom-buttom-style" routerLink="/new-list">+ New List</button>
 
         </div>
 
         <div class="task-list-container has-background-light">
             <div>
                 <div class="top-bar">
-                    <h1 class="title has-text-primary">
+                    <h1 class="title main-text">
                         Tasks
                     </h1>
                     <div class="dropdown is-hoverable is-right">
@@ -47,23 +47,26 @@
                 </div>
 
                 <!-- Task Elements -->
-                <div class="task" *ngFor="let task of checkTask(tasks)" [ngClass]="{ 'completed': task.isComplete}">
+                <cdk-virtual-scroll-viewport style="height: 500px" itemSize="90">
+                    <div class="task" *cdkVirtualFor="let task of checkTask(tasks)"
+                        [ngClass]="{ 'completed': task.isComplete}">
 
-                    <div class="task-text" (click)="onTaskClick(task)">
-                        <p>{{ task.name}}</p>
+                        <div class="task-text" (click)="onTaskClick(task)">
+                            <p>{{ task.name}}</p>
+                        </div>
+
+                        <div class="task-buttons">
+                            <button class="button" [routerLink]="['/lists', selectedListId, 'edit-task', task.id]">
+                                <fa-icon [icon]="faEdit"></fa-icon>
+                            </button>
+                            <button class="button is-danger" (click)="onDeleteTaskClick(task.id)">
+                                <fa-icon [icon]="faTrash"></fa-icon>
+                            </button>
+                        </div>
                     </div>
+                </cdk-virtual-scroll-viewport>
 
-                    <div class="task-buttons">
-                        <button class="button" [routerLink]="['/lists', selectedListId, 'edit-task', task.id]">
-                            <fa-icon [icon]="faEdit"></fa-icon>
-                        </button>
-                        <button class="button is-danger" (click)="onDeleteTaskClick(task.id)">
-                            <fa-icon [icon]="faTrash"></fa-icon>
-                        </button>
-                    </div>
-                </div>
-
-                <button class="circle-add-button button is-primary"
+                <button class="circle-add-button button custom-buttom-style"
                     [routerLink]="['/lists', selectedListId, 'new-task']">
                     <img src="../../../assets/plus-icon.svg" class="has-text-white">
                 </button>

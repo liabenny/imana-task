@@ -4,12 +4,12 @@
             Edit list
         </h1>
 
-        <input #listTitleInput class="input has-background-light is-medium" type="text"
+        <input #listTitleInput class="input has-background-white is-medium" type="text"
             placeholder="Enter list name...">
         <br><br>
         <div class="buttons is-right">
             <button class="button is-medium" [routerLink]="['/lists', listId]">Cancel</button>
-            <button class="button is-primary has-text-white is-medium"
+            <button class="button custom-buttom-style has-text-white is-medium"
                 (click)="updateList(listTitleInput.value)">Save</button>
         </div>
 
