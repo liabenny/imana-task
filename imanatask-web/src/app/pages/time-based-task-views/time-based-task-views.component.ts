@@ -30,8 +30,6 @@ export class TimeBasedTaskViewsComponent implements OnInit {
   }
 
   getPastTasks() {
-    // console.log("past!!!");
-    // console.log(0, this.currentTime - 1);
     this.taskService.getTaskWithinRange(0, this.currentTime - 1).subscribe((res: any) => {
       if ("_embedded" in res) {
         this.pastTasks = res._embedded.taskList;
@@ -40,8 +38,6 @@ export class TimeBasedTaskViewsComponent implements OnInit {
   }
 
   getOneDayTasks() {
-    // console.log("one day!!!");
-    // console.log(this.currentTime, this.currentTime + 86400000);
     this.taskService.getTaskWithinRange(this.currentTime, this.currentTime + 86400000).subscribe((res: any) => {
       if ("_embedded" in res) {
         this.oneDayTasks = res._embedded.taskList;
@@ -50,9 +46,7 @@ export class TimeBasedTaskViewsComponent implements OnInit {
   }
 
   getOneWeekTasks() {
-    // console.log("one week!!!");
-    // console.log(this.currentTime, this.currentTime + 604800000);
-    this.taskService.getTaskWithinRange(this.currentTime, this.currentTime + 604800000).subscribe((res: any) => {
+    this.taskService.getTaskWithinRange(this.currentTime + 86400001, this.currentTime + 604800000).subscribe((res: any) => {
       if ("_embedded" in res) {
         this.oneWeekTasks = res._embedded.taskList;
       }
@@ -60,8 +54,6 @@ export class TimeBasedTaskViewsComponent implements OnInit {
   }
 
   getAfterOneWeekTasks() {
-    // console.log("one week!!!");
-    // console.log(this.currentTime + 604800001, this.currentTime + 10000000000000);
     this.taskService.getTaskWithinRange(this.currentTime + 604800001, 10000000000000).subscribe((res: any) => {
       if ("_embedded" in res) {
         this.afterOneWeekTasks = res._embedded.taskList;
