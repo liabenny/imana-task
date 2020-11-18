@@ -86,6 +86,10 @@ export class TaskService {
     return this.webReqService.put(`tasks/${task.id}/done`, {});
   }
 
+  markIncompleted(task: any) {
+    return this.webReqService.put(`tasks/${task.id}/undo`, {});
+  }
+
   updateList(taskListId: string, updatedName: string) {
     const data = {
       headers: {

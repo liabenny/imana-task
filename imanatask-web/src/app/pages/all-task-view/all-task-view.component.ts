@@ -36,8 +36,8 @@ export class AllTaskViewComponent implements OnInit {
     this.taskService.getCompleteTasks().subscribe((res1: any) => {
       if ("_embedded" in res1) {
         this.completedTasks = res1._embedded.taskList;
-        this.move(this.completedTasks, this.incompledtedTasks);
       }
+      this.move(this.completedTasks, this.incompledtedTasks);
     })
   }
 
