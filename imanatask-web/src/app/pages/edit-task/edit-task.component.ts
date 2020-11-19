@@ -16,6 +16,7 @@ export class EditTaskComponent implements OnInit {
   listId: string;
   selectedDate: Date;
   des: string;
+  myValue = false;
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
@@ -31,11 +32,37 @@ export class EditTaskComponent implements OnInit {
   }
 
   updateTask(title: string, des: string, date: Date) {
-    console.log(title);
-    console.log(des);
-    this.taskService.updateTask(this.taskId, title, des, this.listId, date.getTime()).subscribe(() => {
-      this.router.navigate(['/lists', this.listId]);
-    })
+    var check = new Boolean(true);
+    if (title === undefined || title.length === 0) {
+      document.getElementById("title").classList.add('is-danger');
+      document.getElementById("titleValid").classList.remove('ghost');
+      check = false;
+    }
+    else {
+      document.getElementById("title").classList.remove('is-danger');
+      document.getElementById("titleValid").classList.add('ghost');
+    }
+    if (des === undefined || des.length === 0) {
+      document.getElementById("des").classList.add('is-danger');
+      document.getElementById("desValid").classList.remove('ghost');
+      check = false;
+    }
+    else {
+      document.getElementById("des").classList.remove('is-danger');
+      document.getElementById("desValid").classList.add('ghost');
+    }
+    if (date === undefined) {
+      check = false;
+      document.getElementById("timeValid").classList.remove('ghost');
+    }
+    else {
+      document.getElementById("timeValid").classList.add('ghost');
+    }
+    if (check) {
+      this.taskService.updateTask(this.taskId, title, des, this.listId, date.getTime()).subscribe(() => {
+        this.router.navigate(['/lists', this.listId]);
+      })
+    }
   }
 
 
