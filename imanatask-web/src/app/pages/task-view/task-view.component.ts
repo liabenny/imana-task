@@ -73,8 +73,21 @@ export class TaskViewComponent implements OnInit {
             this.router.navigate(['/lists']);
           })
         }
+        else {
+          alert('You have to select a task list first!');
+        }
       }
     )
+  }
+
+  editList() {
+    if (this.selectedListId === undefined) {
+      alert('You have to select a task list first!');
+    }
+    else {
+      var url = "http://" + window.location.host + "/edit-list/" + this.selectedListId;
+      window.location.href = url;
+    }
   }
 
   onDeleteTaskClick(taskid: string) {
@@ -114,8 +127,6 @@ export class TaskViewComponent implements OnInit {
     }
     else {
       var url = "http://" + window.location.host + "/lists/" + this.selectedListId + "/new-task";
-      console.log(window.location.host)
-      console.log(url);
       window.location.href = url;
     }
   }
