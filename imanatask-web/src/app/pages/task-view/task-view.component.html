@@ -66,8 +66,7 @@
                     </div>
                 </cdk-virtual-scroll-viewport>
 
-                <button class="circle-add-button button custom-buttom-style"
-                    [routerLink]="['/lists', selectedListId, 'new-task']">
+                <button class="circle-add-button button custom-buttom-style" (click)="checkAddTask()">
                     <img src="../../../assets/plus-icon.svg" class="has-text-white">
                 </button>
             </div>

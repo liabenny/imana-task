@@ -8,21 +8,23 @@
             Task Name
         </h1>
         <input #taskTitleInput class="input has-background-white is-small" id="title" type="text">
-        <br><br>
+        <p class="help is-danger ghost" id="titleValid">This username is invalid</p>
+
 
         <h1 class="head is-title">
             Task Descrpition
         </h1>
         <textarea #taskDescription class="textarea has-background-white is-small" id="des">{{des}}</textarea>
-        <br><br>
+        <p class="help is-danger ghost" id="desValid">This descrpition is invalid</p>
+
 
         <h1 class="head is-title">
             Task Time
         </h1>
         <dl-date-time-picker startView="day" maxView="year" minView="day" [(ngModel)]="selectedDate">
         </dl-date-time-picker>
+        <p class="help is-danger ghost" id="timeValid">This time is invalid</p>
 
-        <br><br>
 
         <p id="selectedDate">Selected Date: {{selectedDate}}</p>
 
@@ -35,7 +37,3 @@
 
     </div>
 </div>
-
-<script type="text/javascript">
-
-</script>
