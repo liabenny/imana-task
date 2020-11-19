@@ -35,7 +35,7 @@
                                 <a class="dropdown-item" [routerLink]="['/all-task-view']">
                                     Dashboard
                                 </a>
-                                <a class="dropdown-item" [routerLink]="['/edit-list',selectedListId]">
+                                <a class="dropdown-item" (click)="editList()">
                                     Edit
                                 </a>
                                 <a class="dropdown-item has-text-danger" (click)="deleteList()">
