@@ -106,6 +106,17 @@ export class TaskViewComponent implements OnInit {
         task.isComplete = false;
       })
     }
+  }
 
+  checkAddTask() {
+    if (this.selectedListId === undefined) {
+      alert('You have to select a task list first!');
+    }
+    else {
+      var url = "http://" + window.location.host + "/lists/" + this.selectedListId + "/new-task";
+      console.log(window.location.host)
+      console.log(url);
+      window.location.href = url;
+    }
   }
 }
