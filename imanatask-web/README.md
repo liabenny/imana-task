@@ -1,3 +1,7 @@
+# Reference
+https://github.com/Devstackr/task-manager-mean-stack <br />
+Our project's frontend refers to the CSS styling and basic task manager functionality of the above project.
+
 # Frontend
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.2.0.
