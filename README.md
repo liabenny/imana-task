@@ -10,7 +10,7 @@ With ImanaTask, you'll be able to:
 - Check the completeness of all the tasks.
 - Check the past/incoming tasks based on different dimensions.
 
-All the operations are simplified and are designed to use easily.
+All the operations are simplified and are designed to be used easily.
 
 ## II. Deployment
 It is recommended to run our application using Docker. 
